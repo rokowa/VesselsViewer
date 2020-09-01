@@ -1,0 +1,24 @@
+{
+    "name": "vesselsviewer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start-nodemon": "nodemon server.js",
+        "watch": "parcel watch index.html",
+        "dev": "npm run start-nodemon & npm run watch",
+        "build": "parcel build --public-url . index.html"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "ol": "^6.4.3",
+        "socket.io": "^2.3.0"
+    },
+    "devDependencies": {
+        "concurrently": "^5.3.0",
+        "nodemon": "^2.0.4",
+        "parcel-bundler": "^1.12.4"
+    }
+}
