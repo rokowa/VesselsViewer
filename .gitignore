@@ -2,8 +2,4 @@ package-lock.json
 node_modules/
 .cache/
 map.js
-dist/data.json
-dist/data2.json
-index.html
-main.js
-style.css
+dist/
