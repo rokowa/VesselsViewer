@@ -10,7 +10,10 @@ import {
 import { fromLonLat as olFromLonLat } from 'ol/proj';
 
 import { Vector as olVectorSource, OSM as olOSM } from 'ol/source';
-import { Vector as olVectorLayer, Tile as olTileLayer } from 'ol/layer';
+import {
+    WebGLPoints as olWebGLPointsLayer,
+    Tile as olTileLayer,
+} from 'ol/layer';
 
 import { Point as olPoint } from 'ol/geom';
 
@@ -48,19 +51,17 @@ class Vessels {
                 },
             },
         };
-        this.steadySource = new olVectorSource({
-            style: steadyStyle,
-        });
-        this.movingSource = new olVectorSource({
-            style: movingStyle,
-        });
+        this.steadySource = new olVectorSource();
+        this.movingSource = new olVectorSource();
 
         /* Layers displays features on top of the map */
-        this.steadyLayer = new olVectorLayer({
+        this.steadyLayer = new olWebGLPointsLayer({
             source: this.steadySource,
+            style: steadyStyle,
         });
-        this.movingLayer = new olVectorLayer({
+        this.movingLayer = new olWebGLPointsLayer({
             source: this.movingLayer,
+            style: movingStyle,
         });
 
         this.socket = null;
@@ -88,7 +89,12 @@ class Vessels {
             const feature = new olFeature({
                 vessel: v,
                 HEADING: parseInt(v.HEADING),
-                geometry: new olPoint(olFromLonLat([v.LONGITUDE, v.LATITUDE])),
+                geometry: new olPoint(
+                    olFromLonLat([
+                        parseFLoat(v.LONGITUDE),
+                        parseFloat(v.LATITUDE),
+                    ])
+                ),
             });
             if (heading === 511) {
                 steady.push(feature);
