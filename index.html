@@ -7,10 +7,52 @@
         <title>Vessels Viewer</title>
     </head>
     <body>
-        <!-- <h1>Hello</h1>
-        <div id="messages"></div> -->
         <div id="map"></div>
         <div id="popup"></div>
+        <template id="mainControlTemplate">
+            <div id="mainControl">
+                <button id="newGameButton">Bataille Navale !</button>
+            </div>
+        </template>
+        <template id="newGameControlTemplate">
+            <div id="newGameControl">
+                <div class="top">
+                    <div class="title">
+                        Déplacez la carte pour choisir l'emplacement de vos
+                        navires de combat !
+                    </div>
+                    <a href="#" id="closer">Fermer</a>
+                </div>
+                <canvas class="countGrid"></canvas>
+                <div class="bottom">
+                    <input
+                        type="text"
+                        id="pseudo"
+                        name="pseudo"
+                        placeholder="Pseudo"
+                    />
+                    <fieldset style="display: inline">
+                        <legend>Jouer contre :</legend>
+
+                        <input
+                            type="radio"
+                            id="opponentIA"
+                            name="opponent"
+                            value="IA"
+                        />
+                        <label for="opponentIA">IA</label>
+                        <input
+                            type="radio"
+                            id="opponentHuman"
+                            name="opponent"
+                            value="human"
+                        />
+                        <label for="opponentHuman">Humain</label>
+                    </fieldset>
+                    <button id="playButton">Jouer</button>
+                </div>
+            </div>
+        </template>
         <script src="main.js"></script>
     </body>
 </html>
