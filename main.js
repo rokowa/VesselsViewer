@@ -2,8 +2,14 @@ import { Map, Vessels, Popup } from './viewer';
 
 const divMap = document.getElementById('map');
 const vessels = new Vessels();
+
+const divPopup = document.getElementById('popup');
+const popup = new Popup(divPopup);
+
 const map = new Map(divMap);
 vessels.addToMap(map.olMap);
+popup.addToMap(map.olMap);
+
 vessels.connect();
 
 // function countVessels(grid, offset) {

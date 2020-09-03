@@ -60,7 +60,7 @@ class Vessels {
             style: steadyStyle,
         });
         this.movingLayer = new olWebGLPointsLayer({
-            source: this.movingLayer,
+            source: this.movingSource,
             style: movingStyle,
         });
 
@@ -91,7 +91,7 @@ class Vessels {
                 HEADING: parseInt(v.HEADING),
                 geometry: new olPoint(
                     olFromLonLat([
-                        parseFLoat(v.LONGITUDE),
+                        parseFloat(v.LONGITUDE),
                         parseFloat(v.LATITUDE),
                     ])
                 ),
@@ -142,7 +142,6 @@ class Popup {
         });
 
         this.selected = null;
-        this.contentElement = element.getElementByClassName('popupContent');
 
         this.select = new olSelect({
             condition: olConditionClick,
@@ -151,12 +150,19 @@ class Popup {
             this.open();
         });
 
-        const popupCloser = element.getElementByClassName('popupCloser');
+        const popupCloser = document.createElement('a');
+        popupCloser.href = '#';
+        popupCloser.className = 'popupCloser';
         popupCloser.addEventListener('click', e => {
             this.close();
             popupCloser.blur();
             return false;
         });
+        element.appendChild(popupCloser);
+
+        this.contentElement = document.createElement('div');
+        this.contentElement.className = 'popupContent';
+        element.appendChild(this.contentElement);
     }
 
     open() {
@@ -172,7 +178,7 @@ class Popup {
                 );
             }
         } else if (this.selected !== null) {
-            closePopup();
+            this.close();
         }
     }
 
