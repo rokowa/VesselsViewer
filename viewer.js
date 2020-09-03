@@ -22,6 +22,8 @@ import { click as olConditionClick } from 'ol/events/condition';
 
 import socket_io from 'socket.io-client';
 
+// import { Control as olControl } from 'ol/control';
+
 class Vessels {
     /* Handle vessels containers objects for openlayer and connexion with the server */
 
