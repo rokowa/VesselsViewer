@@ -308,22 +308,20 @@ class Game {
         this.board = new Board();
 
         this.player = new Player();
-        this.player.ships = Board.randomShips();
+        // this.player.ships = Board.randomShips();
         this.opponent = new Player();
         this.opponent.ships = Board.randomShips();
 
         this.divLog = document.getElementById('log');
         this.logger = message => (this.divLog.innerHTML += `${message}<br />`);
 
-        this.start();
+        //this.start();
 
         this.draw();
     }
 
     onClick(event) {
-        console.log('Yo');
         let rect = this.canvas.getBoundingClientRect();
-        console.log(rect);
         let square = this.board.opponentGrid.coordCanvasToSquare(
             event.clientX - rect.left,
             event.clientY - rect.top
@@ -362,6 +360,7 @@ class Game {
     }
 
     start() {
+        this.draw();
         if (Math.random() < 0.5) {
             this.playerTurn();
         } else {
@@ -407,4 +406,4 @@ class Game {
 //     new Game(document.getElementById('game'));
 // });
 
-export { Grid, Ship };
+export { Grid, Ship, Game };

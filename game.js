@@ -1,9 +1,41 @@
 import { Control as olControl } from 'ol/control';
-import { Grid as battleGrid, Ship as battleShip } from './battleship';
+import { Grid as battleGrid, Ship as battleShip, Game } from './battleship';
+
+class GameControl {
+    constructor(divMap) {
+        this.divMap = divMap;
+
+        const template = document.querySelector('#gameControlTemplate');
+        const clone = document.importNode(template.content, true);
+
+        this.divGame = clone.querySelector('#gameControl');
+
+        this.canvas = clone.querySelector('#game');
+
+        this.control = new olControl({
+            element: this.divGame,
+        });
+
+        this.resizeCanvas();
+    }
+
+    resizeCanvas() {
+        const rect = this.divMap.getBoundingClientRect();
+        // const size = Math.min(rect.width, rect.height);
+        // const squareSize = Math.floor((size * 0.8) / 11);
+        // this.grid = new battleGrid(0, 0, squareSize, 1, 'black');
+        // const gridSize = this.grid.getSize();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+        // this.grid.draw(this.ctx);
+    }
+}
 
 class NewGameControl {
     constructor(divMap, vessels, olMap, mainControl) {
         this.divMap = divMap;
+        this.mainControl = mainControl;
+        this.olMap = olMap;
 
         const template = document.querySelector('#newGameControlTemplate');
         const clone = document.importNode(template.content, true);
@@ -23,10 +55,23 @@ class NewGameControl {
         });
 
         clone.querySelector('#closer').addEventListener('click', e => {
-            mainControl.newGameControl = null;
-            olMap.removeControl(this.control);
+            this.close();
             return false;
         });
+
+        clone.querySelector('#playButton').addEventListener('click', e => {
+            const gameControl = new GameControl(divMap);
+            olMap.addControl(gameControl.control);
+            const game = new Game(gameControl.canvas);
+            game.player.ships = this.gridCounter.ships;
+            game.start();
+            this.close();
+        });
+    }
+
+    close() {
+        this.mainControl.newGameControl = null;
+        this.olMap.removeControl(this.control);
     }
 
     addToMap(map) {
@@ -71,6 +116,8 @@ class GridCounter {
 
         this.grid = null;
 
+        this.ships = null;
+
         olMap.on('rendercomplete', e => {
             this.draw();
         });
@@ -83,7 +130,8 @@ class GridCounter {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawGrid();
-        this.drawShips(this.generateShip());
+        this.generateShip();
+        this.drawShips(this.ships);
     }
 
     drawGrid() {
@@ -189,7 +237,7 @@ class GridCounter {
                 t_count[p.y - 1][p.x - 1] = 0;
             });
         }
-        return ships;
+        this.ships = ships;
     }
 }
 
