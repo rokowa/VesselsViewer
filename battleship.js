@@ -322,6 +322,7 @@ class Game {
 
     onClick(event) {
         let rect = this.canvas.getBoundingClientRect();
+        o;
         let square = this.board.opponentGrid.coordCanvasToSquare(
             event.clientX - rect.left,
             event.clientY - rect.top

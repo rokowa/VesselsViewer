@@ -2,8 +2,9 @@
     "name": "vesselsviewer",
     "version": "1.0.0",
     "description": "",
-    "main": "main.js",
+    "main": "server.js",
     "scripts": {
+        "start": "node server.js",
         "start-nodemon": "nodemon server.js",
         "watch": "parcel watch index.html",
         "dev": "npm run start-nodemon & npm run watch",

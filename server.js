@@ -5,8 +5,8 @@ const io = require('socket.io');
 
 function getData(socket) {
     http.get(
-        // 'http://data.aishub.net/ws.php?username=***REMOVED***&format=1&output=json&compress=0',
-        'http://localhost:3000/data2.json',
+        'http://data.aishub.net/ws.php?username=***REMOVED***&format=1&output=json&compress=0',
+        // 'http://localhost:3000/data2.json',
         res => {
             res.setEncoding('utf8');
             let body = '';
